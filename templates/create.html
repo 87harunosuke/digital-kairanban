@@ -1,0 +1,19 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="form-container">
+    <h2>新規投稿</h2>
+    <form action="{{ url_for('create') }}" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="title">件名 (タイトル)</label>
+            <input type="text" id="title" name="title" required placeholder="例: 〇〇商店街のお祭りについて">
+        </div>
+        <div class="form-group">
+            <label for="file">ファイルを選択 (画像またはPDF)</label>
+            <input type="file" id="file" name="file" accept=".png,.jpg,.jpeg,.pdf" required>
+            <p class="help-text">※対応形式: jpg, png, pdf</p>
+        </div>
+        <button type="submit" class="btn-submit">投稿する</button>
+    </form>
+</div>
+{% endblock %}
