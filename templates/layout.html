@@ -11,7 +11,7 @@
 <style>
 body {
     font-family: 'Poppins', sans-serif;
-    background-color: #f5efe6; /* ベージュ */
+    background-color: #f5efe6;
     color: #4a4a4a;
     min-height: 100vh;
 }
@@ -113,7 +113,7 @@ footer {
 
         <div class="nav-links">
             <a href="{{ url_for('index') }}">📄 閲覧</a>
-            <a href="{{ url_for('create_page') }}">✏ 投稿</a>
+            <a href="{{ url_for('create') }}">✏ 投稿</a>
             <a href="{{ url_for('logout') }}">🚪 ログアウト</a>
         </div>
     {% endif %}
