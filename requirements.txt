@@ -2,3 +2,4 @@ flask
 gunicorn
 flask-login
 flask-sqlalchemy
+psycopg2-binary
