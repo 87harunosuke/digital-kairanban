@@ -28,7 +28,10 @@
         <small>❤️ {{ post.likes }}</small>
     </div>
 
-    <p class="mt-3">{{ post.content }}</p>
+<p class="mt-3" style="white-space: pre-wrap;">
+    {{ post.content }}
+</p>
+
 
     {% if post.filename %}
         <img src="{{ url_for('uploaded_file', filename=post.filename) }}"
