@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request, redirect, session, url_for, flash, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
 import os
+from datetime import datetime
+from zoneinfo import ZoneInfo
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY", "devkey")
@@ -20,6 +22,17 @@ db = SQLAlchemy(app)
 
 UPLOAD_FOLDER = "static/uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+
+# =========================
+# 日本時間フィルター追加（←ここが重要）
+# =========================
+@app.template_filter("to_jst")
+def to_jst(dt):
+    if dt is None:
+        return ""
+    return dt.replace(tzinfo=ZoneInfo("UTC")).astimezone(
+        ZoneInfo("Asia/Tokyo")
+    ).strftime("%Y年%m月%d日 %H:%M")
 
 # =========================
 # モデル定義
@@ -80,7 +93,6 @@ def create():
     if "username" not in session:
         return redirect(url_for("login"))
 
-    # ★追加（投稿は管理者のみ）
     if session.get("role") != "admin":
         flash("投稿は管理者のみ可能です")
         return redirect(url_for("index"))
@@ -132,7 +144,6 @@ def edit(post_id):
     if "username" not in session:
         return redirect(url_for("login"))
 
-    # ★追加
     if session.get("role") != "admin":
         flash("編集は管理者のみ可能です")
         return redirect(url_for("index"))
@@ -148,7 +159,6 @@ def edit(post_id):
         return redirect(url_for("index", category=post.category))
 
     return render_template("edit.html", post=post)
-
 
 # =========================
 # 削除
