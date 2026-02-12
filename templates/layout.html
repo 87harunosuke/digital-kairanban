@@ -113,7 +113,11 @@ footer {
 
         <div class="nav-links">
             <a href="{{ url_for('index') }}">📄 閲覧</a>
-            <a href="{{ url_for('create') }}">✏ 投稿</a>
+
+            {% if session.get("role") == "admin" %}
+                <a href="{{ url_for('create') }}">✏ 投稿</a>
+            {% endif %}
+
             <a href="{{ url_for('logout') }}">🚪 ログアウト</a>
         </div>
     {% endif %}

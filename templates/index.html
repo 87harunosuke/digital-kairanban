@@ -3,7 +3,6 @@
 
 <h3 class="mb-4">📄 投稿一覧</h3>
 
-
 <div class="d-flex justify-content-center gap-3 mb-4">
     <a href="{{ url_for('index', category='イベント') }}" 
        class="btn category-btn {% if current_category=='イベント' %}active{% endif %}">
@@ -24,14 +23,17 @@
     <h5>{{ post.title }}</h5>
 
     <div class="d-flex justify-content-between">
-        <small>{{ post.created_at }}</small>
+        <small>
+            {% if post.created_at %}
+                {{ post.created_at.strftime('%Y年%m月%d日 %H:%M') }}
+            {% endif %}
+        </small>
         <small>❤️ {{ post.likes }}</small>
     </div>
 
-<p class="mt-3" style="white-space: pre-wrap;">
-    {{ post.content }}
-</p>
-
+    <p class="mt-3" style="white-space: pre-wrap;">
+        {{ post.content }}
+    </p>
 
     {% if post.filename %}
         <img src="{{ url_for('uploaded_file', filename=post.filename) }}"
@@ -56,4 +58,5 @@
 {% endfor %}
 
 {% endblock %}
+
 

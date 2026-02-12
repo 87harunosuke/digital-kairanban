@@ -80,6 +80,11 @@ def create():
     if "username" not in session:
         return redirect(url_for("login"))
 
+    # ★追加（投稿は管理者のみ）
+    if session.get("role") != "admin":
+        flash("投稿は管理者のみ可能です")
+        return redirect(url_for("index"))
+
     if request.method == "POST":
         title = request.form["title"]
         content = request.form["content"]
@@ -127,6 +132,11 @@ def edit(post_id):
     if "username" not in session:
         return redirect(url_for("login"))
 
+    # ★追加
+    if session.get("role") != "admin":
+        flash("編集は管理者のみ可能です")
+        return redirect(url_for("index"))
+
     post = Post.query.get_or_404(post_id)
 
     if request.method == "POST":
@@ -138,6 +148,7 @@ def edit(post_id):
         return redirect(url_for("index", category=post.category))
 
     return render_template("edit.html", post=post)
+
 
 # =========================
 # 削除
